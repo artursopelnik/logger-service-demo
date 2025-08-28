@@ -38,9 +38,7 @@
     <applicationManager autoExpand="true"/>
 
     <!-- Configures the application on a specified context root -->
-    <webApplication id="logger-service" contextRoot="/logger-service" location="logger-service.war">
-        <classloader commonLibraryRef="log4jLib"/>
-    </webApplication>
+    <webApplication id="logger-service" contextRoot="/logger-service" location="logger-service.war" />
 
     <!-- Default SSL configuration enables trust for default certificates from the Java runtime -->
     <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
