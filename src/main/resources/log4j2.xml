@@ -1,0 +1,21 @@
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <!--
+        <Http name="Splunk" url="http://${splunk.host}:${splunk.port}/services/collector/event">
+            <PatternLayout pattern="%d{ISO8601} %-5p %c - %m%n"/>
+            <Headers>
+                <Property name="Authorization">Splunk ${splunk.token}</Property>
+            </Headers>
+        </Http>
+        -->
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <!-- <AppenderRef ref="Splunk"/> -->
+        </Root>
+    </Loggers>
+</Configuration>

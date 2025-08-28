@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<server description="new server">
+<server description="REST Logger Service">
 
     <!-- Enable features -->
     <featureManager>
         <feature>jakartaee-10.0</feature>
         <feature>microProfile-6.1</feature>
+        <feature>mpRestClient-3.0</feature> <!-- for MicroProfile Rest Client (Splunk) -->
     </featureManager>
 
     <!-- This template enables security. To get the full use of all the capabilities, a keystore and user registry are required. -->
@@ -29,14 +30,30 @@
     <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
     <httpEndpoint id="defaultHttpEndpoint"
                   httpPort="9080"
-                  httpsPort="9443" />
+                  httpsPort="9443">
+        <accessLogging logFormat='%h %u %t "%r" %s %b %D'/>
+    </httpEndpoint>
 
     <!-- Automatically expand WAR files and EAR files -->
     <applicationManager autoExpand="true"/>
 
     <!-- Configures the application on a specified context root -->
-    <webApplication contextRoot="/logger-service" location="logger-service.war" />
+    <webApplication id="logger-service" contextRoot="/logger-service" location="logger-service.war">
+        <classloader commonLibraryRef="log4jLib"/>
+    </webApplication>
 
     <!-- Default SSL configuration enables trust for default certificates from the Java runtime -->
     <ssl id="defaultSSLConfig" trustDefaultCerts="true" />
+
+    <!-- Logging configuration -->
+    <logging traceSpecification="*=info" maxFileSize="100" maxFiles="5"/>
+
+    <!-- Environment variables for Splunk configuration -->
+    <variable name="splunk.host" defaultValue="localhost"/>
+    <variable name="splunk.port" defaultValue="8088"/>
+    <variable name="splunk.token" defaultValue="your-splunk-token"/>
+    <variable name="splunk.index" defaultValue="main"/>
+
+    <!-- Auth validation settings -->
+    <variable name="auth.valid.tokens" defaultValue="admin-token"/>
 </server>
